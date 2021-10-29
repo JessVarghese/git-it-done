@@ -3,6 +3,25 @@ var limitWarningEl = document.querySelector("#limit-warning");
 
 var repoNameEl = document.querySelector("#repo-name");
 
+
+var getFeaturedRepos = function(language) {
+    var apiUrl = "https://api.github.com/search/repositories?q=" + language + "+is:featured&sort=help-wanted-issues";
+  
+    fetch(apiUrl).then(function(response) {
+        if (response.ok) {
+            response.json().then(function(data) {
+                displayRepos(data.items, language);
+            });
+          console.log(response);
+
+        } else {
+            
+          alert('Error: GitHub User Not Found');
+        }
+    })
+
+};
+
 var getRepoName = function() {
     var queryString = document.location.search;
     var repoName = queryString.split("=")[1];
